@@ -1,8 +1,22 @@
 let formElem = document.querySelector("form");
+let users =[];
+let userId = 0;
 formElem.addEventListener("submit", (e) =>{
     e.preventDefault();
-    console.log(formElem.fullname);
-    console.log(formElem.useremail);
-    console.log(formElem.userpass);
+    let foundUser= users.find(user => user.email === useremail.value);
+    if(!foundUser){
+        users.push(
+            {
+                id:++userId,
+                fullname:fullname.value,
+                email:useremail.value,
+                pass:userpass.value
+            }
+        );
+    }else{
+        alert("asasas");
+    }
+   
 
+console.log(users);
 });
