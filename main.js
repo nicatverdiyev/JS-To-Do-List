@@ -50,18 +50,14 @@ function deleteUser(id) {
 
 
 function editUser(button, id) {
-    const {firstElementChild, lastElementChild, previousElementSibling} = button.parentElement.previousElementSibling
-    let passwordSpan = firstElementChild;
-    let passwordInput = lastElementChild;
+    const {
+        emailSpan,emailInput,usernameSpan,usernameInput,firstElementChild,lastElementChild
+    } 
+    = 
+    getDomElements(button);
 
-    let emailSpan = previousElementSibling.firstElementChild;
-    let emailInput = previousElementSibling.lastElementChild;
-
-    let usernameSpan = previousElementSibling.previousElementSibling.firstElementChild;
-    let usernameInput = previousElementSibling.previousElementSibling.lastElementChild;
-
-    passwordSpan.classList.add("d-none");
-    passwordInput.classList.remove("d-none");
+    firstElementChild.classList.add("d-none");
+    lastElementChild.classList.remove("d-none");
 
     emailSpan.classList.add("d-none");
     emailInput.classList.remove("d-none");
@@ -69,10 +65,34 @@ function editUser(button, id) {
     usernameSpan.classList.add("d-none");
     usernameInput.classList.remove("d-none");
 
-    
+    // USER FİND
+    let foundUser = users.find(user => user.id ===id);
+    lastElementChild.value = foundUser.pass
+emailInput.value = foundUser.email
+usernameInput.value = foundUser.fullname
+
+    // SAVE BUTTON
+    button.nextElementSibling.classList.remove("d-none");
+    button.classList.add("d-none");
+
 }
 
 // -----elave olunan datanı edit etmek---END---
+
+function updateUser(button, id) {
+    const {
+        emailSpan,emailInput,usernameSpan,usernameInput,firstElementChild,lastElementChild
+    } 
+    = 
+    getDomElements(button);
+    let foundUser = users.find(user => user.id ===id);
+    foundUser.fullname = usernameInput.value;
+    foundUser.email = emailInput.value;
+    foundUser.pass = lastElementChild.value;
+
+    addUi(users);
+
+}
 
 // ---yazılan datanın elave olunması----START--
 function addUi(param) {
@@ -92,11 +112,12 @@ function addUi(param) {
                   </td>
                   <td class="userPassCol">
                   <span>*********</span>
-                  <input type="password" class="d-none">
+                  <input type="text" class="d-none">
                   </td>
                   <td>
                     <button class="btn btn-danger" onclick="deleteUser(${id})">Silmək</button>
-                    <button class="btn btn-secondary" onclick="editUser(this,${id})">Düzəltmək</button>
+                    <button class="btn btn-secondary" onclick="editUser(this,${id})">Düzəlt</button>
+                    <button class="btn btn-success d-none" onclick="updateUser(this,${id})">Qeyd</button>
                   </td>
         </tr>
         `
@@ -105,3 +126,21 @@ function addUi(param) {
 // ---yazılan datanın elave olunması----END--
 
 
+function getDomElements(btn) {
+    const {firstElementChild, lastElementChild, previousElementSibling} = btn.parentElement.previousElementSibling
+
+    let emailSpan = previousElementSibling.firstElementChild;
+    let emailInput = previousElementSibling.lastElementChild;
+
+    let usernameSpan = previousElementSibling.previousElementSibling.firstElementChild;
+    let usernameInput = previousElementSibling.previousElementSibling.lastElementChild;
+return{
+    firstElementChild,
+lastElementChild,
+    emailSpan,
+emailInput,
+usernameSpan,
+usernameInput
+}
+
+}
