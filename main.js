@@ -89,12 +89,9 @@ function updateUser(button, id) {
     foundUser.fullname = usernameInput.value;
     foundUser.email = emailInput.value;
     foundUser.pass = lastElementChild.value;
-
     addUi(users);
-
 }
-
-// ---yazılan datanın elave olunması----START--
+// ---yazılan datanın elave olunması----START
 function addUi(param) {
     tBodyElem.innerHTML = "";
     param.forEach(user =>{
